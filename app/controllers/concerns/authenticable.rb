@@ -1,4 +1,5 @@
 module Authenticable
+  
   def current_user
     return @current_user if @current_user
     
@@ -9,4 +10,10 @@ module Authenticable
     
     @current_user = User.find(decoded[:user_id]) rescue ActiveRecord::RecordNotFound
   end
+  
+  protected
+  
+    def check_login
+      head :forbidden unless self.current_user
+    end
 end
