@@ -3,16 +3,19 @@ class Api::V1::ProductsController < ApplicationController
   before_action :check_login, only: %i[create]
   before_action :check_owner, only: %i[update destroy]
   
+  #GET /products
   def index
     @products = Product.search(params)
     render json: ProductSerializer.new(@products).serializable_hash
   end
   
+  #GET /products/:id
   def show
     options = { include: [:user] }
     render json: ProductSerializer.new(@product, options).serializable_hash
   end
   
+  #POST /products/
   def create
     product = current_user.products.build(product_params)
     if product.save
@@ -22,6 +25,7 @@ class Api::V1::ProductsController < ApplicationController
     end
   end
   
+  #PATCH /products/:id
   def update
     if @product.update(product_params)
       render json: ProductSerializer.new(@product).serializable_hash
@@ -30,6 +34,7 @@ class Api::V1::ProductsController < ApplicationController
     end
   end
   
+  #DELETE /products/:id
   def destroy
     @product.destroy
     head 204

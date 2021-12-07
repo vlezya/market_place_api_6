@@ -35,18 +35,21 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
       params: { user: { email: @user.email } },
       headers: { Authorization: JsonWebToken.encode(user_id: @user.id) },
       as: :json
+      
     assert_response :success
   end
   
   test "should forbid update user" do
     patch api_v1_user_url(@user),
     params: { user: { email: @user.email } }, as: :json
+    
     assert_response :forbidden
   end
   
   test "should not update user when invalid params are sent" do
     patch api_v1_user_url(@user), params: { user: { email:
     'bad_email', password: '123456' } }, as: :json
+    
     assert_response :forbidden
   end
   
@@ -55,6 +58,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
       delete api_v1_user_url(@user),
       headers: { Authorization: JsonWebToken.encode(user_id: @user.id) }, as: :json
     end
+    
     assert_response :no_content
   end
   
