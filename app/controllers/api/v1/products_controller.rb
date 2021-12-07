@@ -9,6 +9,7 @@ class Api::V1::ProductsController < ApplicationController
   end
   
   def show
+    options = { include: [:user] }
     render json: ProductSerializer.new(@product).serializable_hash
   end
   
