@@ -4,8 +4,7 @@ class EnoughProductsValidator < ActiveModel::Validator
       product = placement.product
     
       if placement.quantity > product.quantity
-        record.errors[product.title.to_s] << "Is out of stock,
-          just #{product.quantity} left"
+        record.errors[product.title.to_s] << "Is out of stock, just #{product.quantity} left"
       end
     end
   end
